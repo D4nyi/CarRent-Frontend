@@ -1,0 +1,10 @@
+.flexed {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+img {
+    width: 33%;
+    padding: 5rem;
+}
