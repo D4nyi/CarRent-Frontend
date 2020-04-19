@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-cars',
@@ -18,7 +19,13 @@ export class CarsComponent implements OnInit {
         'Access-Control-Allow-Origin': '*'
       }
     })
-      .subscribe((data: any) => this.json = JSON.stringify(data, undefined, 2));
+      .subscribe((data: any) => {
+        this.json = JSON.stringify(data, undefined, 2)
+      }, error => {
+          if (error) {
+            this.json = 'Problem occured!';
+          }
+        });
   }
 
 }
