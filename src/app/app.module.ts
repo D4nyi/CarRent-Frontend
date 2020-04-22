@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthComponent } from './auth/auth.component';
+import { CookieService } from 'ngx-cookie-service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CarsComponent,
     HomeComponent,
     HeaderComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,8 +29,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     LayoutModule,
     NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

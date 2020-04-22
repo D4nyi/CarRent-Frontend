@@ -13,15 +13,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  onSaveData() {
-  }
-
-  onFetchData() {
-  }
-
-  onLogout() {
-  }
-
   ngOnDestroy() {
   }
 }
