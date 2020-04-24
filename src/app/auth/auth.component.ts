@@ -9,7 +9,6 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  loginSub: Subscription;
   valid: boolean = true;
 
   constructor(private auth: AuthService) { }
@@ -23,12 +22,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (regex.test(form.value.password)) {
       return 'Invalid password format!'
     }
-
-    this.loginSub = this.auth.login(form.value);
+    
     console.log(form.value);
   }
 
   ngOnDestroy(): void {
-    this.loginSub.unsubscribe();
   }
 }

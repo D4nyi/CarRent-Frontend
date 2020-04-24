@@ -1,67 +1,69 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Login, Token } from './login.model';
+import { Login } from '../models/login.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { User, IUser } from '../models/user.model';
+import { Signup } from '../models/signup.model';
+import { AuthResult } from '../models/authResult.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<any>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  public login(login: Login): Observable<unknown> {
-    return this.http.post<Token>('https://localhost:5001/api/auth/login', login)
-      .pipe(
-        catchError(this.handleError),
+  public login(login: Login): Observable<AuthResult> {
+    return this.http.post<AuthResult>(environment.apiUrl + environment.authUrls.LOGIN, login)
+      .pipe<AuthResult, AuthResult>(
+        catchError<AuthResult, Observable<never>>(this.handleError),
         tap(resData => {
-          this.handleAuthentication();
+          if (resData.error) {
+            return throwError(resData.error);
+          }
+          console.log(resData);
+          this.handleAuthentication(resData.email, resData.name, resData.token, resData.expirationDate);
         })
       );
   }
 
-
-  signup(email: string, password: string): Observable<unknown> {
-    return this.http.post('https', null)
-      .pipe(
-        catchError(this.handleError),
+  public signup(signup: Signup): Observable<unknown> {
+    return this.http.post<AuthResult>(environment.apiUrl + environment.authUrls.SIGNIN, signup)
+      .pipe<AuthResult, AuthResult>(
+        catchError<AuthResult, Observable<never>>(this.handleError),
         tap(resData => {
-          this.handleAuthentication();
+          if (resData.error) {
+            return throwError(resData.error);
+          }
+          this.handleAuthentication(resData.email, resData.name, resData.token, resData.expirationDate);
         })
       );
   }
 
-  autoLogin(): void {
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
+  public autoLogin(): void {
+    const userData: IUser = JSON.parse(localStorage.getItem('userData'));
     if (!userData) {
       return;
     }
 
     const loadedUser = new User(
       userData.email,
-      userData.id,
+      userData.name,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }
 
-  logout(): void {
+  public logout(): void {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
@@ -71,24 +73,25 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
-  autoLogout(expirationDuration: number): void {
+  public autoLogout(expirationDuration: number): void {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
   }
 
-  private handleAuthentication(email: string, userId: string, token: string, expiresIn: number): void {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
+  private handleAuthentication(email: string, name: string, token: string, expirationDate: string): void {
+    console.log(email, name, token, expirationDate);
+    const expires = new Date(expirationDate);
+    const user = new User(email, name, token, expires);
     this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
+    this.autoLogout(expires.getTime() - new Date().getTime());
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+      return throwError(errorMessage + 'asd');
     }
     return throwError(errorMessage);
   }

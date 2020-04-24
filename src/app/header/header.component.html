@@ -19,7 +19,7 @@
                 <div ngbDropdown class="d-inline-block">
                     <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</a>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem>Action - 1</button>
+                        <button ngbDropdownItem (click)="send()">Action - 1</button>
                         <button ngbDropdownItem>Another Action</button>
                         <button ngbDropdownItem>Something else is here</button>
                     </div>
