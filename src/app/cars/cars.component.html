@@ -1,2 +1,10 @@
-<p>cars works!</p>
-<pre>{{json || 'Loading'}}</pre>
+<div class="card-columns">
+  <div class="card" *ngFor="let car of cars">
+    <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top" alt="{{ car.brand + ' ' + car.model }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ car.brand + ' ' + car.model }}</h5>
+      <p class="card-text">{{car.engineDescription}}</p>
+      <button class="btn btn-primary" (click)="rent(car.id)">Rent</button>
+    </div>
+  </div>
+</div>

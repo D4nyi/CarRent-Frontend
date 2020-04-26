@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { RentComponent } from './rent/rent.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     HomeComponent,
     HeaderComponent,
     AuthComponent,
+    RentComponent,
   ],
   imports: [
     BrowserModule,

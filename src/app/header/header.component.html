@@ -12,18 +12,23 @@
             <li [ngbNavItem]="2" class="nav-item" routerLinkActive="active">
                 <a ngbNavLink class="nav-link" routerLink="/get">Cars</a>
             </li>
-            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active">
-                <a ngbNavLink class="nav-link" routerLink="/auth">Auth</a>
-            </li>
             <li [ngbNavItem]="4" class="nav-item dropdown">
                 <div ngbDropdown class="d-inline-block">
                     <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</a>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem (click)="send()">Action - 1</button>
+                        <button ngbDropdownItem>Action - 1</button>
                         <button ngbDropdownItem>Another Action</button>
                         <button ngbDropdownItem>Something else is here</button>
                     </div>
                 </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-right">
+            <li class="nav-item" *ngIf="!isLoggedin">
+                <a class="nav-link" routerLink="/auth">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="onLogout()" *ngIf="isLoggedin">Logout</a>
             </li>
         </ul>
     </div>

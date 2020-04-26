@@ -1,31 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit, OnDestroy {
+export class AuthComponent {
   valid: boolean = true;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
-
-  }
-
-  public onLogin(form: NgForm){
+  public onLogin(form: NgForm) {
     const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{10,})');
     if (regex.test(form.value.password)) {
       return 'Invalid password format!'
     }
-    
-    console.log(form.value);
-  }
-
-  ngOnDestroy(): void {
+    this.auth.login({
+      email: form.value.email,
+      password: form.value.password
+    }).subscribe(response => {
+      console.log(response);
+      this.router.navigate(['/get'])
+    },
+      error => {
+        console.log(error);
+      });
   }
 }

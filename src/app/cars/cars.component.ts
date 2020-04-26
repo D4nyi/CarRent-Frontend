@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { error } from 'protractor';
+import { Car } from '../models/car.model';
+import { Router } from '@angular/router';
+import { CarsService } from '../services/cars.service';
 
 @Component({
   selector: 'app-cars',
@@ -8,24 +9,27 @@ import { error } from 'protractor';
   styleUrls: ['./cars.component.css']
 })
 export class CarsComponent implements OnInit {
+  cars: Car[] = null;
 
-  json: string;
+  constructor(private carsService: CarsService, private router: Router) { }
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit(): void {
-    this.http.get('https://localhost:5001/api/car/get', {
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      }
-    })
-      .subscribe((data: any) => {
-        this.json = JSON.stringify(data, undefined, 2)
-      }, error => {
-          if (error) {
-            this.json = 'Problem occured!';
-          }
-        });
+  public ngOnInit(): void {
+    // this.http.get('https://localhost:5001/api/car', {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*'
+    //   }
+    // })
+    //   .subscribe((data: any) => {
+    //     this.json = JSON.stringify(data, undefined, 2)
+    //   }, error => {
+    //       if (error) {
+    //         this.json = 'Problem occured!';
+    //       }
+    //     });
+    this.cars = this.carsService.listCars();
   }
 
+  public rent(carId: string) {
+    this.router.navigate(['/rent'], { state: { carId: carId } });
+  }
 }
