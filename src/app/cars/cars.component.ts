@@ -26,10 +26,12 @@ export class CarsComponent implements OnInit {
     //         this.json = 'Problem occured!';
     //       }
     //     });
-    this.cars = this.carsService.listCars();
+    this.carsService.listCars().subscribe(cars => {
+      this.cars = cars;
+    });
   }
 
   public rent(carId: string) {
-    this.router.navigate(['/rent'], { state: { carId: carId } });
+    this.router.navigate(['/detail'], { state: { carId } });
   }
 }

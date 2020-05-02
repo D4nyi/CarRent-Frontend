@@ -13,7 +13,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { RentComponent } from './rent/rent.component';
+import { DetailComponent } from './detail-rent/detail/detail.component';
+import { DetailRentComponent } from './detail-rent/detail-rent.component';
+import { RentComponent } from './detail-rent/rent/rent.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { RentComponent } from './rent/rent.component';
     HomeComponent,
     HeaderComponent,
     AuthComponent,
+    DetailRentComponent,
+    DetailComponent,
     RentComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

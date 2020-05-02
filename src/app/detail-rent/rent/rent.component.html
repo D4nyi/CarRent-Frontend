@@ -1,0 +1,44 @@
+<ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!valid">The provided informations are invalid!</ngb-alert>
+<form (submit)="onSubmit(rentForm)" #rentForm="ngForm">
+  <input type="text" name="carId" [value]="carId" hidden>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="time">Range: {{selected}}</label>
+      <input id="time" type="number" class="numbers form-control" name="number" ngModel #numberInput="ngModel" min="1"
+        [max]="max" [readonly]="max === 1" [value]="max === 1 ? max : 0" placeholder="1" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="intervals">Intervals</label>
+      <select id="intervals" class="form-control custom-select custom-select-sm mb-2" (change)="onChange($event.target)"
+        name="interval" ngModel #selectInput="ngModel">
+        <option [selected]="true" value="">Select Range</option>
+        <option *ngFor="let time of times" value="{{time.intervals}}">{{time.intervals}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="email">Email address</label>
+      <input type="email" name="email" ngModel #emailInput="ngModel" class="form-control"
+        [ngClass]="{'is-invalid': emailInput.invalid && emailInput.touched}" id="email" placeholder="Enter email"
+        required email>
+      <div *ngIf="emailInput.invalid && emailInput.touched">
+        <small class="text-danger">Invalid email format!</small>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="pwd">Password</label>
+      <input type="password" name="password" ngModel class="form-control" id="pwd" #passwordInput="ngModel"
+        [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}" placeholder="Password" required
+        minlength="10">
+      <div *ngIf="passwordInput.invalid && passwordInput.touched">
+        <small class="text-danger">
+          <div>Must be 10 character long and</div>
+          <div>must contain at least one special char,</div>
+          <div>an uppercase char and a number!</div>
+        </small>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Rent</button>
+</form>

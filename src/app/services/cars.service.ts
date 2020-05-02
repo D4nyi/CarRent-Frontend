@@ -1,106 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Car } from '../models/car.model';
+import { environment } from 'src/environments/environment.prod';
+import { Observable } from 'rxjs';
+import { isNullOrWhiteSpace } from '../shared/helpers';
+import { RentingResult } from '../models/renteningResult.model';
+import { Renting } from '../models/renting.model';
 
 @Injectable({ providedIn: 'root' })
 export class CarsService {
-    json: string = `[
-        {
-          "id": "d98e39d1-cc7e-4921-b782-ef8fa6ec0eb9",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        },
-        {
-          "id": "94025485-e9e1-461d-b271-26e64e5b6a8c",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        },
-        {
-          "id": "d98e39d1-cc7e-4921-b782-ef8fa6ec0eb9",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        },
-        {
-          "id": "94025485-e9e1-461d-b271-26e64e5b6a8c",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        },
-        {
-          "id": "d98e39d1-cc7e-4921-b782-ef8fa6ec0eb9",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        },
-        {
-          "id": "94025485-e9e1-461d-b271-26e64e5b6a8c",
-          "brand": "VW",
-          "model": "Golf",
-          "colour": 3,
-          "licensePlate": "RPP-469",
-          "engineDescription": "1.4 TSI, 122HP, 200Nm",
-          "mileage": 6.5,
-          "premiseId": null,
-          "premise": null,
-          "tenantId": null,
-          "tenant": null
-        }
-      ]`;
-    cars: Car[] = null;
+  cars: Car[] = null;
 
-    constructor(private http: HttpClient) {
-        this.cars = JSON.parse(this.json);
-    }
+  constructor(private http: HttpClient) { }
 
-    public listCars(): Car[] {
-        return this.cars;
-    }
+  public listCars(): Observable<Car[]> {
+    return this.http.get<Car[]>(environment.apiUrl + environment.carUrls.CARS);
+  }
 
-    public getCarDetail(carId: string):Car {
-        return this.cars.find(car => car.id === carId);
+  public getCarDetail(carId: string): Observable<Car> | null {
+    if (isNullOrWhiteSpace(carId)) {
+      return null;
     }
+    return this.http.post<Car>(environment.apiUrl + environment.carUrls.DETAIL, { carId });
+  }
 
-    public rentCar(carId: string) {
-    }
+  public rentCar(renting: Renting) {
+    return this.http.post<RentingResult>(environment.apiUrl+environment.carUrls.RENT, renting);
+  }
 
-    public declineRent(carId: string, rentingId: string) {
-    }
+  public cancelRent(carId: string, rentingId: string) {
+  }
 }

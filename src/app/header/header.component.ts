@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Login } from '../models/login.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,14 +8,18 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  collapsed = true;
-  isLoggedin: boolean;
-  private isSuthSub: Subscription;
+  public static isLoggedin:boolean;
+  public _isLoggedin: boolean;
+  public collapsed = true;
+  private authSub: Subscription;
 
   constructor(private auth: AuthService) { }
 
   public ngOnInit(): void {
-    this.isSuthSub = this.auth.isAuthenticated.subscribe(isAuth => this.isLoggedin = isAuth);
+    this.authSub =  this.auth.user.subscribe(user => {
+      this._isLoggedin = !!user;
+      HeaderComponent.isLoggedin = this._isLoggedin;
+    });
   }
 
   public onLogout() {
@@ -24,6 +27,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.isSuthSub.unsubscribe();
+    this.authSub.unsubscribe();
   }
 }

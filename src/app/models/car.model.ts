@@ -6,10 +6,12 @@ export interface Car {
     licensePlate: string;
     engineDescription: string;
     mileage: number;
-    premiseId: number;
+    premiseId: string;
     premise: string;
-    tenantId: number;
-    tenant: string;
+    reningId: string;
+    renting: string;
+    colourName?:string;
+    rented?:string;
 }
 
 export enum Colour {

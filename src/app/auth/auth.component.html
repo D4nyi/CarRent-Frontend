@@ -1,7 +1,7 @@
 <div class="col-md-6">
   <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!valid">Credentials are invalid!</ngb-alert>
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
-    <div class="form-group row">
+    <div class="form-group">
       <label for="email">Email address</label>
       <input type="email" name="email" ngModel #emailInput="ngModel" class="form-control"
         [ngClass]="{'is-invalid': emailInput.invalid && emailInput.touched}" id="email" placeholder="Enter email"
@@ -10,7 +10,7 @@
           email format!</small>
       </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group">
       <label for="pwd">Password</label>
       <input type="password" name="password" ngModel class="form-control" id="pwd" #passwordInput="ngModel"
         [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}" placeholder="Password" required

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">Car Rent</a>
+    <a class="navbar-brand" routerLink="/">Car Rent</a>
     <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,7 +10,10 @@
                 <a ngbNavLink class="nav-link" routerLink="/">Home</a>
             </li>
             <li [ngbNavItem]="2" class="nav-item" routerLinkActive="active">
-                <a ngbNavLink class="nav-link" routerLink="/get">Cars</a>
+                <a ngbNavLink class="nav-link" routerLink="/cars">Cars</a>
+            </li>
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="!_isLoggedin">
+                <a ngbNavLink class="nav-link" routerLink="/register">Registration</a>
             </li>
             <li [ngbNavItem]="4" class="nav-item dropdown">
                 <div ngbDropdown class="d-inline-block">
@@ -24,11 +27,11 @@
             </li>
         </ul>
         <ul class="navbar-nav mr-right">
-            <li class="nav-item" *ngIf="!isLoggedin">
+            <li class="nav-item" *ngIf="!_isLoggedin">
                 <a class="nav-link" routerLink="/auth">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="onLogout()" *ngIf="isLoggedin">Logout</a>
+                <a class="nav-link" (click)="onLogout()" *ngIf="_isLoggedin">Logout</a>
             </li>
         </ul>
     </div>

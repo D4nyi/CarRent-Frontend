@@ -1,0 +1,54 @@
+<div class="col-md-6">
+  <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!valid">{{ warning }}</ngb-alert>
+  <form (submit)="onRegister(registerForm)" #registerForm="ngForm">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" ngModel #firstNameInput="ngModel" class="form-control" id="firstName"
+        placeholder="First Name" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" name="lastName" ngModel #lastNameInput="ngModel" class="form-control" id="lastName"
+        placeholder="Last Name" maxlength="50" required>
+    </div>
+    <div class="form-group">
+      <label for="userName">User Name</label>
+      <input type="text" name="userName" ngModel #userNameInput="ngModel" class="form-control" id="userName"
+        placeholder="User Name (optional)" maxlength="50"
+        ngbTooltip="Auto generatated will be: firstname_lastname99, ending with your birth year" placement="right"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="birthDate">BirthDate</label>
+      <input type="date" name="birthDate" ngModel #birthDateInput="ngModel" class="form-control" id="birthDate"
+        placeholder="Birth Date"
+        ngbTooltip="You must be 18 years old!" placement="right"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" name="address" ngModel #addressInput="ngModel" class="form-control" id="address"
+        placeholder="Address" maxlength="300" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" name="email" ngModel #emailInput="ngModel" class="form-control"
+        [ngClass]="{'is-invalid': emailInput.invalid && emailInput.touched}" id="email" placeholder="Enter email"
+        required email>
+      <div class="col-sm-4" *ngIf="emailInput.invalid && emailInput.touched"><small class="text-danger">Invalid
+          email format!</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password</label>
+      <input type="password" name="password" ngModel class="form-control" id="pwd" #passwordInput="ngModel"
+        [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}" placeholder="Password" required
+        minlength="10">
+      <div class="col-sm-8" *ngIf="passwordInput.invalid && passwordInput.touched"><small class="text-danger">Must
+          be 10 character
+          long and must contain at least one of each special char, uppercase char and number!</small></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

@@ -4,7 +4,11 @@ export const environment = {
   authUrls: {
     LOGIN: '/auth/login',
     SIGNIN: '/auth/signin',
+    REGISTER: '/auth/test'
   },
   carUrls: {
+    CARS: '/car/',
+    RENT: '/car/rent',
+    DETAIL: '/car/detail'
   }
 };

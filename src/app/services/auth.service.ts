@@ -3,28 +3,32 @@ import { Login } from '../models/login.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, tap, take, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { catchError, tap } from 'rxjs/operators';
 import { User, IUser } from '../models/user.model';
 import { Signup } from '../models/signup.model';
 import { AuthResult } from '../models/authResult.model';
+import { Register } from '../models/register.model';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   public user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  get isAuthenticated(): Observable<boolean> {
-    return this.user.pipe<User, boolean>(take<User>(1), map<User, boolean>(user => !!user));
-  }
-
   constructor(private http: HttpClient, private router: Router) { }
+
+  public register(register: Register): Observable<Register> {
+    return this.http.post<Register>(environment.apiUrl + environment.authUrls.REGISTER, register)
+      .pipe<Register>(
+        catchError<Register, Observable<never>>(this.handleError)
+      );
+  }
 
   public login(login: Login): Observable<AuthResult> {
     return this.http.post<AuthResult>(environment.apiUrl + environment.authUrls.LOGIN, login)
       .pipe<AuthResult, AuthResult>(
         catchError<AuthResult, Observable<never>>(this.handleError),
-        tap(resData => {
+        tap<AuthResult>(resData => {
           if (resData.error) {
             return throwError(resData.error);
           }
@@ -93,10 +97,13 @@ export class AuthService {
   }
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage + 'asd');
+    console.log(errorRes);
+    if (errorRes.error || errorRes.error.errors) {
+      return throwError(`Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`);
+    } else if (errorRes.status >= 400 && errorRes.statusText.toUpperCase() === 'OK') {
+      return throwError(`Cause: An unknown error occurred!, Code: ${errorRes.status}`);
     }
-    return throwError(errorMessage);
+
+    return throwError(`Status: ${errorRes.statusText}, Code: ${errorRes.status}`);
   }
 }
