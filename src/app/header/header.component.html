@@ -15,6 +15,9 @@
             <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="!_isLoggedin">
                 <a ngbNavLink class="nav-link" routerLink="/register">Registration</a>
             </li>
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="_isLoggedin">
+                <a ngbNavLink class="nav-link" routerLink="/rented">Rented Car</a>
+            </li>
             <li [ngbNavItem]="4" class="nav-item dropdown">
                 <div ngbDropdown class="d-inline-block">
                     <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</a>

@@ -1,10 +1,8 @@
-<p>{{carId}}</p>
-
 <div class="row">
     <div class="col-12">
       <app-detail carId="{{carId}}"></app-detail>
     </div>
   <div class="col-md-9">
-    <app-rent *ngIf="isLoggedin"></app-rent>
+    <app-rent *ngIf="isLoggedin" carId="{{carId}}"></app-rent>
   </div>
 </div>

@@ -17,6 +17,7 @@ import { DetailComponent } from './detail-rent/detail/detail.component';
 import { DetailRentComponent } from './detail-rent/detail-rent.component';
 import { RentComponent } from './detail-rent/rent/rent.component';
 import { RegisterComponent } from './register/register.component';
+import { RentedCarComponent } from './rented-car/rented-car.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './register/register.component';
     DetailRentComponent,
     DetailComponent,
     RentComponent,
-    RegisterComponent
+    RegisterComponent,
+    RentedCarComponent
   ],
   imports: [
     BrowserModule,

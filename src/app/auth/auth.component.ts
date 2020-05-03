@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { validatePassword } from '../shared/helpers';
+import { validatePassword, isNullOrWhiteSpace } from '../shared/helpers';
 
 @Component({
   selector: 'app-auth',
@@ -15,7 +15,7 @@ export class AuthComponent {
   constructor(private auth: AuthService, private router: Router) { }
 
   public onLogin(form: NgForm): void {
-    if (validatePassword(form.value.password)) {
+    if (isNullOrWhiteSpace(form.value.email) || validatePassword(form.value.password)) {
       this.valid = false;
     }
     this.auth.login({

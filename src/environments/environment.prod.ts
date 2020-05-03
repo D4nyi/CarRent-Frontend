@@ -4,11 +4,13 @@ export const environment = {
   authUrls: {
     LOGIN: '/auth/login',
     SIGNIN: '/auth/signin',
-    REGISTER: '/auth/test'
+    REGISTER: '/auth/register'
   },
   carUrls: {
     CARS: '/car/',
     RENT: '/car/rent',
-    DETAIL: '/car/detail'
+    DETAIL: '/car/detail',
+    RENTED: '/car/rented',
+    CANCEL: '/car/cancel'
   }
 };

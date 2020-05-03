@@ -1,7 +1,7 @@
 /**
  * Checks if the povided value is a string and it has at least 1 non-withespace chars
  * @param {any} str value that should be tested
- * @returns {boolean} true if the provided value is a string and has at least 1 non-withespace chars, otherwise false
+ * @returns {boolean} false if the provided value is a string and has at least 1 non-withespace chars, otherwise true
  */
 export function isNullOrWhiteSpace(str: any): boolean {
   if (!str || typeof str !== 'string') return true;
@@ -36,7 +36,13 @@ export function adultAge(birthDate: string | Date): boolean {
   const month = today.getMonth() - birthDate.getMonth();
   let age = today.getFullYear() - birthDate.getFullYear();
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+    age--;
   }
   return age >= 18;
+}
+
+export function tomorrow(): Date {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  return date;
 }

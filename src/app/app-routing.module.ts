@@ -7,12 +7,14 @@ import { DetailRentComponent } from './detail-rent/detail-rent.component';
 import { AuthGuard } from './services/auth.guard';
 import { RentComponent } from './detail-rent/rent/rent.component';
 import { RegisterComponent } from './register/register.component';
+import { RentedCarComponent } from './rented-car/rented-car.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cars', component: CarsComponent },
+  { path: 'rented', component: RentedCarComponent },
   { path: 'auth', component: AuthComponent },
   {
     path: 'detail',

@@ -97,7 +97,6 @@ export class AuthService {
   }
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
-    console.log(errorRes);
     if (errorRes.error || errorRes.error.errors) {
       return throwError(`Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`);
     } else if (errorRes.status >= 400 && errorRes.statusText.toUpperCase() === 'OK') {

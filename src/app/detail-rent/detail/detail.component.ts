@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CarsService } from 'src/app/services/cars.service';
-import { Car, Colour } from 'src/app/models/car.model';
-import { isNullOrWhiteSpace } from 'src/app/shared/helpers';
-import { AuthService } from 'src/app/services/auth.service';
+import { CarDetail, Colour } from 'src/app/models/carDetail.model';
 
 @Component({
   selector: 'app-detail',
@@ -11,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DetailComponent implements OnInit {
   @Input() public carId: string;
-  public car: Car = {
+  public car: CarDetail = {
     brand: 'Dummy',
     colour: Colour.Black,
     engineDescription: 'Dummy',
@@ -19,10 +17,8 @@ export class DetailComponent implements OnInit {
     model: 'Dummy',
     id: 'Dummy',
     mileage: 0,
-    premise: null,
-    premiseId: 'Dummy',
-    reningId: 'Dummy',
-    renting: null,
+    premiseName: 'None',
+    rented: 'Not Rented'
   };
 
   constructor(private carService: CarsService) { }
@@ -31,9 +27,11 @@ export class DetailComponent implements OnInit {
     const result = this.carService.getCarDetail(this.carId);
     if (result) {
       result.subscribe(car => {
+        console.log(car);
         this.car = car;
         this.car.colourName = Colour[this.car.colour];
-        this.car.rented = isNullOrWhiteSpace(this.car.reningId) && !!this.car.renting ? 'Not rented.' : 'Rented.';
+
+        this.car.rented = this.car.rented ? 'Rented.' : 'Not rented.';
       }, error => console.log(error)
       );
     }

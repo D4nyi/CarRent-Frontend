@@ -1,0 +1,45 @@
+<p *ngIf="noRent">No Rented Car!</p>
+<div *ngIf="!noRent">
+  <div class="row pad-bottom">
+    <div class="card col-sm-5" style="padding:0;">
+      <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top card-img-bottom" alt="asd">
+    </div>
+    <div class="pad-left">
+      <p>Brand: {{car.brand}}</p>
+      <p>Model: {{car.model}}</p>
+      <p>Color: {{car.colourName}}</p>
+      <p>License Plate: {{car.licensePlate}}</p>
+      <p>Engine: {{car.engineDescription}}</p>
+      <p>Mileage (l/100km): {{car.mileage}}</p>
+      <p>Premise: {{car.premiseName}}</p>
+      <p>Rented: {{car.rented}}</p>
+    </div>
+  </div>
+
+  <p>Cancel Renting:</p>
+  <div class="col-md-6">
+    <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="onError">{{errorMsg}}</ngb-alert>
+    <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!valid">Credentials are invalid!</ngb-alert>
+    <form (submit)="onCancel(cancelForm)" #cancelForm="ngForm">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" name="email" ngModel #emailInput="ngModel" class="form-control"
+          [ngClass]="{'is-invalid': emailInput.invalid && emailInput.touched}" id="email" placeholder="Enter email"
+          required email>
+        <div class="col-sm-4" *ngIf="emailInput.invalid && emailInput.touched"><small class="text-danger">Invalid
+            email format!</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password</label>
+        <input type="password" name="password" ngModel class="form-control" id="pwd" #passwordInput="ngModel"
+          [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}" placeholder="Password" required
+          minlength="10">
+        <div class="col-sm-5" *ngIf="passwordInput.invalid && passwordInput.touched"><small class="text-danger">Must
+            be 10 character
+            long and must contain at least one of each special char, uppercase char and number!</small></div>
+      </div>
+      <button type="submit" class="btn btn-primary">Cancel</button>
+    </form>
+  </div>
+</div>
