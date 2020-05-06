@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CarsService } from 'src/app/services/cars.service';
 import { isNullOrWhiteSpace, validatePassword, tomorrow } from 'src/app/shared/helpers';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rent',
@@ -24,7 +25,7 @@ export class RentComponent implements OnInit {
   public additionlInfo = '';
   private selectedTime: { interval: string, range: string };
 
-  constructor(private carsService: CarsService) { }
+  constructor(private carsService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
     const tm = tomorrow();
@@ -73,14 +74,13 @@ export class RentComponent implements OnInit {
       this.additionlInfo += 'You can\'t pick up any cars today';
     }
 
-    if (form.untouched || (isNullOrWhiteSpace(form.value.email) || !validatePassword(form.value.password)) || !this.valid) {
+    if (form.untouched || (isNullOrWhiteSpace(form.value.email) || isNullOrWhiteSpace(form.value.password)) || !this.valid) {
       if (!isNullOrWhiteSpace(this.additionlInfo)) {
         this.additionlInfo += '!';
       }
       return;
     }
 
-    console.log(form.value);
 
     const end = this.getReturnDate(start, this.selectedTime.interval, form.value.number);
 
@@ -90,8 +90,8 @@ export class RentComponent implements OnInit {
       password: form.value.password,
       end: end.toISOString(),
       start: start.toISOString()
-    }).subscribe(result=>{
-      console.log(result);
+    }).subscribe(()=>{
+      this.router.navigate(['rented']);
     }, error =>{
       this.onError = true;
       this.errorMsg = error;
@@ -99,6 +99,8 @@ export class RentComponent implements OnInit {
   }
 
   private getReturnDate(start: Date, interval: string, number: number): Date {
+    start = new Date(start.valueOf());
+
     let hours = 0;
     switch (interval) {
       case 'hour(s)':
@@ -115,7 +117,6 @@ export class RentComponent implements OnInit {
     }
 
     start.setTime(start.getTime() + (hours * 60 * 60 * 1000));
-
     return start;
   }
 }

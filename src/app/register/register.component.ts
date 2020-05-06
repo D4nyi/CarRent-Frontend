@@ -24,7 +24,7 @@ export class RegisterComponent {
     const lname = isNullOrWhiteSpace(form.value.lastName);
     const birthDate = !adultAge(form.value.birthDate);
     const address = isNullOrWhiteSpace(form.value.address);
-    const password = validatePassword(form.value.password);
+    const password = !validatePassword(form.value.password);
     const userName = isNullOrWhiteSpace(form.value.userName);
     const email = isNullOrWhiteSpace(form.value.email);
 

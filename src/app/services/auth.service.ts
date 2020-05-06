@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment.prod';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   public user = new BehaviorSubject<User>(null);
-  private tokenExpirationTimer: any;
+  private tokenExpirationTimer: NodeJS.Timeout;
 
   constructor(private http: HttpClient, private router: Router) { }
 

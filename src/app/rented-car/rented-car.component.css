@@ -5,3 +5,14 @@
 .pad-bottom {
   padding-bottom: 2.5rem;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fill {
+  height: 10rem;
+  width: 10rem;
+}

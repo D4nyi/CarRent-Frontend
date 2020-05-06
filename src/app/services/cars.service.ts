@@ -28,8 +28,8 @@ export class CarsService {
       .pipe<RentingResult>(catchError<RentingResult, Observable<never>>(this.handleError));
   }
 
-  public cancelRent(email: string, password: string) {
-    return this.http.post<string>(environment.apiUrl + environment.carUrls.CANCEL, { email, password })
+  public cancelRent(carId: string, email: string, password: string) {
+    return this.http.post<string>(environment.apiUrl + environment.carUrls.CANCEL, { carId, email, password })
       .pipe<string>(catchError<string, Observable<never>>(this.handleError));
   }
 
@@ -39,9 +39,7 @@ export class CarsService {
   }
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
-    console.log(errorRes);
     let errorMsg = `Status: ${errorRes.statusText}, Code: ${errorRes.status}`;
-
     if (errorRes.error && Object.keys(errorRes.error.errors).length !== 0) {
       errorMsg = `Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`;
     } else if (errorRes.status === 422) {

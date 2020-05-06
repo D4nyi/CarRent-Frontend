@@ -1,5 +1,13 @@
-<p *ngIf="noRent">No Rented Car!</p>
-<div *ngIf="!noRent">
+<div class="center" *ngIf="car === null && !checked">
+  <div class="spinner-grow text-info fill"></div>
+</div>
+<div>
+  <h2 class="card-title" style="text-align:center;font-size: 3rem;">No Rented Car!</h2>
+  <div class="card" *ngIf="car === null && checked">
+    <img src="../../assets/emptyGarage.jpg" class="card-img-top card-img-bottom" alt="asd">
+  </div>
+</div>
+<div *ngIf="car !== null && checked">
   <div class="row pad-bottom">
     <div class="card col-sm-5" style="padding:0;">
       <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top card-img-bottom" alt="asd">
@@ -16,8 +24,9 @@
     </div>
   </div>
 
-  <p>Cancel Renting:</p>
+
   <div class="col-md-6">
+    <h3>Cancel Renting:</h3>
     <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="onError">{{errorMsg}}</ngb-alert>
     <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="!valid">Credentials are invalid!</ngb-alert>
     <form (submit)="onCancel(cancelForm)" #cancelForm="ngForm">
@@ -35,9 +44,11 @@
         <input type="password" name="password" ngModel class="form-control" id="pwd" #passwordInput="ngModel"
           [ngClass]="{'is-invalid': passwordInput.invalid && passwordInput.touched}" placeholder="Password" required
           minlength="10">
-        <div class="col-sm-5" *ngIf="passwordInput.invalid && passwordInput.touched"><small class="text-danger">Must
-            be 10 character
-            long and must contain at least one of each special char, uppercase char and number!</small></div>
+        <div class="col-sm-5" *ngIf="passwordInput.invalid && passwordInput.touched">
+          <small class="text-danger">
+            Must be 10 character long and must contain at least one of each special char, uppercase char and number!
+          </small>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Cancel</button>
     </form>

@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  images: string[] = [];
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    for (let index = 0; index < 6; index++) {
+      this.images[index] = `../../assets/slide/${index + 1}.jpg`;
+    }
   }
-
 }

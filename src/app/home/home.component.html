@@ -1,5 +1,10 @@
-<div class="flexed">
-    <img src="../../assets/carrental.jpg">
-    <img src="../../assets/letöltés.jpg">
-    <img src="../../assets/letöltésasd.jpg">
-</div>
+<ngb-carousel [interval]="1500" [pauseOnHover]="true">
+    <ng-template ngbSlide *ngFor="let img of images; index as i">
+        <div class="carousel-caption">
+            <h3>My slide {{i + 1}} title</h3>
+        </div>
+        <div class="picsum-img-wrapper">
+            <img [src]="img" width="100%" alt="My image {{i + 1}} description">
+        </div>
+    </ng-template>
+</ngb-carousel>
