@@ -1,7 +1,7 @@
 /**
  * Checks if the povided value is a string and it has at least 1 non-withespace chars
- * @param {any} str value that should be tested
- * @returns {boolean} false if the provided value is a string and has at least 1 non-withespace chars, otherwise true
+ * @param str value that should be tested
+ * @returns  false if the provided value is a string and has at least 1 non-withespace chars, otherwise true
  */
 export function isNullOrWhiteSpace(str: any): boolean {
   if (!str || typeof str !== 'string') return true;
@@ -9,9 +9,9 @@ export function isNullOrWhiteSpace(str: any): boolean {
 }
 
 /**
- * Test if the password is not null or whitespace and has at least 10 chars, with upper and lowwer case letters, a numeric and a special 
- * @param {string} pwd Password that should be tested
- * @returns {boolean} true if the password matches the criteria, otherwise false
+ * Test if the password is not null or whitespace and has at least 10 chars, with upper and lowwer case letters, a numeric and a special
+ * @param pwd Password that should be tested
+ * @returns true if the password matches the criteria, otherwise false
  */
 export function validatePassword(pwd: string): boolean {
   if (isNullOrWhiteSpace(pwd)) return false;
@@ -21,8 +21,8 @@ export function validatePassword(pwd: string): boolean {
 
 /**
  * Tests if the given birthDate was 18 years ago
- * @param {string | Date} birthDate Birthdate
- * @returns {boolean} true if the birthDate was 18 years ago, otherwise false
+ * @param birthDate Birthdate
+ * @returns true if the birthDate was 18 years ago, otherwise false
  */
 export function adultAge(birthDate: string | Date): boolean {
   if (typeof birthDate === 'string') {

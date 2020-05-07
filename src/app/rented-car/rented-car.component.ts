@@ -22,9 +22,9 @@ export class RentedCarComponent implements OnInit {
   constructor(private carsService: CarsService, private router: Router) { }
 
   ngOnInit(): void {
-    // const timer = setTimeout(() => {
-    //   this.router.navigate(['/']); // error
-    // }, 10_000);
+    const timer = setTimeout(() => {
+      this.router.navigate(['/']); // error
+    }, 10_000);
 
     if (!isNullOrWhiteSpace(this.success)) {
       this.checked = true;
@@ -34,7 +34,7 @@ export class RentedCarComponent implements OnInit {
       .subscribe(rented => {
         if (rented) {
           this.car = rented;
-          //clearTimeout(timer);
+          clearTimeout(timer);
         }
         this.checked = true;
       }, () => {

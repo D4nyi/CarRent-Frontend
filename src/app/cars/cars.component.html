@@ -1,3 +1,9 @@
+<div class="d-flex justify-content-around" style="padding-bottom: 5rem;">
+  <button id="all" class="btn" [ngClass]="{'btn-info': selected !== 'all', 'btn-primary': selected === 'all'}" (click)="onClick($event)">All</button>
+  <button id="free" class="btn btn-info" [ngClass]="{'btn-info': selected !== 'free', 'btn-primary': selected === 'free'}" (click)="onClick($event)">Free</button>
+  <button id="rented" class="btn btn-info" [ngClass]="{'btn-info': selected !== 'rented', 'btn-primary': selected === 'rented'}" (click)="onClick($event)">Rented</button>
+</div>
+
 <div class="card-columns">
   <div class="card" *ngFor="let car of cars">
     <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top" alt="{{ car.brand + ' ' + car.model }}">

@@ -1,32 +1,31 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  public static isLoggedin:boolean;
-  public _isLoggedin: boolean;
+export class HeaderComponent implements OnInit {
+  public isLoggedin: boolean;
   public collapsed = true;
-  private authSub: Subscription;
+  public darkMode = false;
 
   constructor(private auth: AuthService) { }
 
   public ngOnInit(): void {
-    this.authSub =  this.auth.user.subscribe(user => {
-      this._isLoggedin = !!user;
-      HeaderComponent.isLoggedin = this._isLoggedin;
+    AppComponent.darkMode.subscribe(enabled => {
+      this.darkMode = enabled;
     });
+    this.isLoggedin = AppComponent.isLoggedin;
+  }
+
+  public onChange(event: any): void {
+    AppComponent.darkMode.next(event.target.checked);
   }
 
   public onLogout() {
     this.auth.logout();
-  }
-
-  public ngOnDestroy(): void {
-    this.authSub.unsubscribe();
   }
 }

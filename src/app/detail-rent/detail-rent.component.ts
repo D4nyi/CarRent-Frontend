@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-detail-rent',
@@ -20,6 +20,6 @@ export class DetailRentComponent implements OnInit {
 
   public ngOnInit(): void {
     this.carId = history.state.carId;
-    this.isLoggedin = HeaderComponent.isLoggedin;
+    this.isLoggedin = AppComponent.isLoggedin;
   }
 }

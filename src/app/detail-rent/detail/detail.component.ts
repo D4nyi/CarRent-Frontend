@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CarsService } from 'src/app/services/cars.service';
 import { CarDetail, Colour } from 'src/app/models/carDetail.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -21,7 +22,7 @@ export class DetailComponent implements OnInit {
     rented: 'Not Rented'
   };
 
-  constructor(private carService: CarsService) { }
+  constructor(private carService: CarsService, private router: Router) { }
 
   ngOnInit(): void {
     const result = this.carService.getCarDetail(this.carId);
@@ -34,6 +35,8 @@ export class DetailComponent implements OnInit {
         this.car.rented = this.car.rented ? 'Rented.' : 'Not rented.';
       }, error => console.log(error)
       );
+    } else {
+      this.router.navigate(['/error']);
     }
   }
 }

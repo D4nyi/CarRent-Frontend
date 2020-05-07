@@ -98,22 +98,22 @@ export class RentComponent implements OnInit {
     });
   }
 
-  private getReturnDate(start: Date, interval: string, number: number): Date {
+  private getReturnDate(start: Date, interval: string, intervalLength: number): Date {
     start = new Date(start.valueOf());
 
     let hours = 0;
     switch (interval) {
       case 'hour(s)':
-        hours = number;
+        hours = intervalLength;
         break;
       case 'day(s)':
-        hours = number * 24
+        hours = intervalLength * 24
         break;
       case 'week':
         hours = 7 * 24;
         break;
       default:
-        throw new Error("Invalid interval");
+        throw new Error('Invalid interval');
     }
 
     start.setTime(start.getTime() + (hours * 60 * 60 * 1000));

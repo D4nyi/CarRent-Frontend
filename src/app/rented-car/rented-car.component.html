@@ -1,9 +1,9 @@
 <div class="center" *ngIf="car === null && !checked">
   <div class="spinner-grow text-info fill"></div>
 </div>
-<div>
+<div *ngIf="car === null && checked">
   <h2 class="card-title" style="text-align:center;font-size: 3rem;">No Rented Car!</h2>
-  <div class="card" *ngIf="car === null && checked">
+  <div class="card">
     <img src="../../assets/emptyGarage.jpg" class="card-img-top card-img-bottom" alt="asd">
   </div>
 </div>

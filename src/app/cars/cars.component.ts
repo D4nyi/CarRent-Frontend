@@ -9,17 +9,32 @@ import { CarsService } from '../services/cars.service';
   styleUrls: ['./cars.component.css']
 })
 export class CarsComponent implements OnInit {
-  cars: CarDetail[] = null;
+  public cars: CarDetail[] = null;
+  public selected = 'all';
+  private allCars: CarDetail[];
 
   constructor(private carsService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
     this.carsService.listCars().subscribe(cars => {
+      console.log(cars);
+      this.allCars = cars;
       this.cars = cars;
     });
   }
 
   public rent(carId: string) {
     this.router.navigate(['/detail'], { state: { carId } });
+  }
+
+  public onClick(event: MouseEvent): void {
+    this.selected = (event.srcElement as HTMLElement).id;
+    if (this.selected === 'all') {
+      this.cars = this.allCars;
+    } else if (this.selected === 'free') {
+      this.cars = this.allCars.filter(car => car.rented === false);
+    } else if (this.selected === 'rented') {
+      this.cars = this.allCars.filter(car => car.rented === true);
+    }
   }
 }

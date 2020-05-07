@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { Subject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +9,22 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'CarRent';
+  public static darkMode = new Subject<boolean>();
+  public static isLoggedin: boolean;
+  public title = 'CarRent';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, @Inject(DOCUMENT) private document: Document) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    AppComponent.darkMode.subscribe(() => {
+      this.document.body.classList.toggle('darkMode');
+    });
+
     this.authService.autoLogin();
+
+    this.authService.user.subscribe(user => {
+      AppComponent.isLoggedin = !!user;
+    });
+
   }
 }

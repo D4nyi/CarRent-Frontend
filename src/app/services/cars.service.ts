@@ -16,9 +16,9 @@ export class CarsService {
     return this.http.get<CarDetail[]>(environment.apiUrl + environment.carUrls.CARS);
   }
 
-  public getCarDetail(carId: string): Observable<CarDetail> | null {
+  public getCarDetail(carId: string): Observable<CarDetail> {
     if (isNullOrWhiteSpace(carId)) {
-      throw new Error('Invalid character in the id!');
+      return null;
     }
     return this.http.post<CarDetail>(environment.apiUrl + environment.carUrls.DETAIL, { carId });
   }

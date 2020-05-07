@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg" [ngClass]="{'navbar-dark bg-dark': darkMode, 'navbar-light bg-light': !darkMode}">
     <a class="navbar-brand" routerLink="/">Car Rent</a>
-    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
+        aria-label="Toggle navigation" (click)="collapsed = !collapsed">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -12,20 +13,30 @@
             <li [ngbNavItem]="2" class="nav-item" routerLinkActive="active">
                 <a ngbNavLink class="nav-link" routerLink="/cars">Cars</a>
             </li>
-            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="!_isLoggedin">
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="!isLoggedin">
                 <a ngbNavLink class="nav-link" routerLink="/register">Registration</a>
             </li>
-            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="_isLoggedin">
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="isLoggedin">
                 <a ngbNavLink class="nav-link" routerLink="/rented">Rented Car</a>
             </li>
         </ul>
         <ul class="navbar-nav mr-right">
-            <li class="nav-item" *ngIf="!_isLoggedin">
+            <li class="nav-item" *ngIf="!isLoggedin">
                 <a class="nav-link" routerLink="/auth">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="onLogout()" *ngIf="_isLoggedin">Logout</a>
+                <a class="nav-link" (click)="onLogout()" *ngIf="isLoggedin">Logout</a>
+            </li>
+            <li class="nav-item">
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" (change)="onChange($event)">
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
             </li>
         </ul>
     </div>
 </nav>
+<hr [ngClass]="{'hrDark': darkMode}"/>
