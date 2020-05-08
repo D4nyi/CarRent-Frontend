@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarDetail } from '../models/carDetail.model';
 import { Router } from '@angular/router';
 import { CarsService } from '../services/cars.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-cars',
@@ -11,13 +12,16 @@ import { CarsService } from '../services/cars.service';
 export class CarsComponent implements OnInit {
   public cars: CarDetail[] = null;
   public selected = 'all';
+  public darkMode:boolean;
   private allCars: CarDetail[];
 
   constructor(private carsService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
+    AppComponent.darkMode.subscribe(enabled =>{
+      this.darkMode = enabled;
+    });
     this.carsService.listCars().subscribe(cars => {
-      console.log(cars);
       this.allCars = cars;
       this.cars = cars;
     });

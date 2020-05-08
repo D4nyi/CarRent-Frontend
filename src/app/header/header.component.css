@@ -52,17 +52,17 @@ hr {
 }
 
 .onoffswitch-inner:before {
-    content: "Dark";
+    content: "Light";
     padding-left: 10px;
-    background-color: var(--dark);
-    color: #FFFFFF;
+    background-color: #EEEEEE;
+    color: #999999;
 }
 
 .onoffswitch-inner:after {
-    content: "Light";
+    content: "Dark";
     padding-right: 10px;
-    background-color: #EEEEEE;
-    color: #999999;
+    background-color: var(--dark);
+    color: #FFFFFF;
     text-align: right;
 }
 

@@ -8,13 +8,15 @@ import { AuthGuard } from './services/auth.guard';
 import { RentComponent } from './detail-rent/rent/rent.component';
 import { RegisterComponent } from './register/register.component';
 import { RentedCarComponent } from './rented-car/rented-car.component';
+import { AdminComponent } from './admin/admin.component';
+import { ModifyComponent } from './admin/modify/modify.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'cars', component: CarsComponent },
-  { path: 'rented', component: RentedCarComponent },
+  { path: 'rented', component: RentedCarComponent, canActivate: [AuthGuard] },
   { path: 'auth', component: AuthComponent },
   {
     path: 'detail',
@@ -22,6 +24,8 @@ const routes: Routes = [
     children: [{ path: 'rent', component: RentComponent, canActivate: [AuthGuard] }]
   },
   { path: 'register', component: RegisterComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'admin/modify', component: ModifyComponent }
   // { path: '**', component: ErrorComponent}
 ];
 

@@ -18,6 +18,8 @@ import { DetailRentComponent } from './detail-rent/detail-rent.component';
 import { RentComponent } from './detail-rent/rent/rent.component';
 import { RegisterComponent } from './register/register.component';
 import { RentedCarComponent } from './rented-car/rented-car.component';
+import { AdminComponent } from './admin/admin.component';
+import { ModifyComponent } from './admin/modify/modify.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { RentedCarComponent } from './rented-car/rented-car.component';
     DetailComponent,
     RentComponent,
     RegisterComponent,
-    RentedCarComponent
+    RentedCarComponent,
+    AdminComponent,
+    ModifyComponent
   ],
   imports: [
     BrowserModule,

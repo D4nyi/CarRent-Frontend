@@ -12,5 +12,8 @@ export const environment = {
     DETAIL: '/car/detail',
     RENTED: '/car/rented',
     CANCEL: '/car/cancel'
+  },
+  premiseUrls: {
+    GET: '/premise'
   }
 };

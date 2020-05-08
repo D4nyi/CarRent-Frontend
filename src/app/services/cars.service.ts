@@ -7,6 +7,7 @@ import { isNullOrWhiteSpace } from '../shared/helpers';
 import { RentingResult } from '../models/renteningResult.model';
 import { Renting } from '../models/renting.model';
 import { catchError } from 'rxjs/operators';
+import { Premise } from '../models/premise.model';
 
 @Injectable({ providedIn: 'root' })
 export class CarsService {
@@ -37,6 +38,12 @@ export class CarsService {
     return this.http.get<CarDetail>(environment.apiUrl + environment.carUrls.RENTED + '/' + email)
       .pipe<CarDetail>(catchError<CarDetail, Observable<never>>(this.handleError));
   }
+
+  public getPremises(): Observable<Premise[]> {
+    return this.http.get<Premise[]>(environment.apiUrl + environment.premiseUrls.GET)
+    .pipe<Premise[]>(catchError<Premise[], Observable<never>>(this.handleError));
+  }
+
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
     let errorMsg = `Status: ${errorRes.statusText}, Code: ${errorRes.status}`;

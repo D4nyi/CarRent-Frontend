@@ -8,10 +8,20 @@ export const environment = {
   authUrls: {
     LOGIN: '/auth/login',
     SIGNIN: '/auth/signin',
+    REGISTER: '/auth/register'
   },
   carUrls: {
+    CARS: '/car/',
+    RENT: '/car/rent',
+    DETAIL: '/car/detail',
+    RENTED: '/car/rented',
+    CANCEL: '/car/cancel'
+  },
+  premiseUrls: {
+    GET: '/premise'
   }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
