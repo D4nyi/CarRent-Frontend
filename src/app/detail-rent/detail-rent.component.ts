@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-detail-rent',
@@ -18,8 +19,12 @@ export class DetailRentComponent implements OnInit {
   public max = 1;
   public isLoggedin: boolean;
 
+  constructor(private authService: AuthService) { }
+
   public ngOnInit(): void {
     this.carId = history.state.carId;
-    this.isLoggedin = AppComponent.isLoggedin;
+    this.authService.user.subscribe(user => {
+      this.isLoggedin = !!user;
+    });
   }
 }

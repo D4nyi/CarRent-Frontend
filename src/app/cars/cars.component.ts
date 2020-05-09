@@ -32,7 +32,7 @@ export class CarsComponent implements OnInit {
   }
 
   public onClick(event: MouseEvent): void {
-    this.selected = (event.srcElement as HTMLElement).id;
+    this.selected = (event.target as HTMLElement).id;
     if (this.selected === 'all') {
       this.cars = this.allCars;
     } else if (this.selected === 'free') {

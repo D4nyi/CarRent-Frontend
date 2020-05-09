@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AppComponent } from '../app.component';
 
@@ -18,7 +18,9 @@ export class HeaderComponent implements OnInit {
     AppComponent.darkMode.subscribe(enabled => {
       this.darkMode = enabled;
     });
-    this.isLoggedin = AppComponent.isLoggedin;
+    this.auth.user.subscribe(user => {
+      this.isLoggedin = !!user;
+    });
   }
 
   public onChange(event: any): void {

@@ -12,6 +12,7 @@ export class ModifyComponent implements OnInit {
   public car: CarDetail;
   public premises: Premise[];
   public colors: { name: string, key: number }[];
+
   constructor(private carService: CarsService) { }
 
   public ngOnInit(): void {
@@ -28,8 +29,9 @@ export class ModifyComponent implements OnInit {
     } else {
 
     }
+
     this.colors = Object.keys(Colour)
-      .filter(k => typeof Colour[k] === "string" && Colour[k] !== "None")
+      .filter(k => typeof Colour[k] === 'string' && Colour[k] !== 'None')
       .map((k, i) => {
         return {
           key: i + 1,
@@ -37,6 +39,7 @@ export class ModifyComponent implements OnInit {
         };
       });
   }
+
   public onModify(form: NgForm): void {
     console.log(form.value);
   }

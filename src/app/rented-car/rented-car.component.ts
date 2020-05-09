@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarDetail } from '../models/carDetail.model';
 import { NgForm } from '@angular/forms';
-import { validatePassword, isNullOrWhiteSpace } from '../shared/helpers';
+import { isNullOrWhiteSpace } from '../shared/helpers';
 import { CarsService } from '../services/cars.service';
 import { IUser } from '../models/user.model';
 import { Router } from '@angular/router';
@@ -34,8 +34,8 @@ export class RentedCarComponent implements OnInit {
       .subscribe(rented => {
         if (rented) {
           this.car = rented;
-          clearTimeout(timer);
         }
+        clearTimeout(timer);
         this.checked = true;
       }, () => {
         this.checked = false;

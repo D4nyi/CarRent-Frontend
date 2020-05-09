@@ -10,6 +10,7 @@ import { RegisterComponent } from './register/register.component';
 import { RentedCarComponent } from './rented-car/rented-car.component';
 import { AdminComponent } from './admin/admin.component';
 import { ModifyComponent } from './admin/modify/modify.component';
+import { AdminGuard } from './services/admin.guard';
 
 
 const routes: Routes = [
@@ -24,8 +25,8 @@ const routes: Routes = [
     children: [{ path: 'rent', component: RentComponent, canActivate: [AuthGuard] }]
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'admin/modify', component: ModifyComponent }
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  { path: 'admin/modify', component: ModifyComponent, canActivate: [AdminGuard] }
   // { path: '**', component: ErrorComponent}
 ];
 

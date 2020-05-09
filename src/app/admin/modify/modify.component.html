@@ -6,43 +6,42 @@
     <form (submit)="onModify(modifyForm)" #modifyForm="ngForm">
       <div class="form-group">
         <label for="brand">Brand</label>
-        <input type="text" name="brand" ngModel #brandNameInput="ngModel" class="form-control" id="brand"
-          placeholder="Brand" required>
+        <input type="text" name="brand" class="form-control" id="brand" [(ngModel)]="car.brand" placeholder="Brand"
+          required>
       </div>
       <div class="form-group">
         <label for="model">Model</label>
-        <input type="text" name="model" ngModel #modelNameInput="ngModel" class="form-control" id="model"
-          placeholder="Model" maxlength="50" required>
+        <input type="text" name="model" class="form-control" id="model" [(ngModel)]="car.model" placeholder="Model"
+          maxlength="50" required>
       </div>
       <div class="form-group">
         <label for="color">Color</label>
-        <select id="color" class="form-control custom-select custom-select-sm mb-2" name="color" ngModel
-          #premisesInput="ngModel">
+        <select id="color" class="form-control custom-select custom-select-sm mb-2" name="color"
+          [(ngModel)]="car.colour">
           <option [selected]="true" value="">Select Color</option>
           <option *ngFor="let color of colors" value="{{color.key}}">{{color.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="licensePlate">License Plate</label>
-        <input type="text" name="licensePlate" ngModel #licensePlateInput="ngModel" class="form-control"
-          id="licensePlate" placeholder="License Plate" max="10" required>
+        <input type="text" name="licensePlate" class="form-control" [(ngModel)]="car.licensePlate" id="licensePlate"
+          placeholder="License Plate" max="10" required>
       </div>
       <div class="form-group">
         <label for="engineDescription">Engine Description</label>
-        <input type="text" name="engineDescription" ngModel #engineDescriptionInput="ngModel" class="form-control"
-          id="Engine Description" placeholder="engineDescription" maxlength="300" required>
+        <input type="text" name="engineDescription" class="form-control" [(ngModel)]="car.engineDescription"
+          id="Engine Description" placeholder="Engine Description" maxlength="300" required>
       </div>
       <div class="form-group">
         <label for="mileage">Mileage</label>
-        <input type="number" name="mileage" ngModel #mileageInput="ngModel" class="form-control" id="mileage"
+        <input type="number" name="mileage" class="form-control" id="mileage" [(ngModel)]="car.mileage"
           placeholder="mileage" required email>
       </div>
       <div class="form-group">
-        <label for="premises">Premises</label>
-        <select id="premises" class="form-control custom-select custom-select-sm mb-2" name="premises" ngModel
-          #premisesInput="ngModel">
+        <label for="premises">Premises (left empty means no change)</label>
+        <select id="premises" class="form-control custom-select custom-select-sm mb-2" name="premises">
           <option [selected]="true" value="">Select Premise</option>
-          <option *ngFor="let premise of premises" value="{{premise.id}}">{{premise.name}}</option>
+          <option *ngFor="let premise of premises" value="{{premise.id}}">{{premise.name}}, {{premise.address}}</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>

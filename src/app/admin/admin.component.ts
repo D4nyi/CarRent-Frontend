@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as JwtDecode from 'jwt-decode';
-import { IUser } from '../models/user.model';
-import { Token } from '../models/token.model';
 import { AppComponent } from '../app.component';
 import { CarsService } from '../services/cars.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { CarDetail } from '../models/carDetail.model';
 
 @Component({
@@ -18,7 +15,7 @@ export class AdminComponent implements OnInit {
   public warning: string;
   public valid = true;
 
-  constructor(private carsService: CarsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private carsService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
     AppComponent.darkMode.subscribe(enabled => {
@@ -28,12 +25,9 @@ export class AdminComponent implements OnInit {
     this.carsService.listCars().subscribe(cars => {
       this.cars = cars;
     });
-
-    const user: IUser = JSON.parse(localStorage.getItem('userData')) as IUser;
-    console.log(JwtDecode<Token>(user._token)["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
   }
 
   public onModify(car: CarDetail): void {
-    this.router.navigate(['./modify'], { relativeTo: this.route, state: { car } });
+    this.router.navigate(['/admin/modify'], { state: { car } });
   }
 }
