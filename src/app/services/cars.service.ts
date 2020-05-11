@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { CarDetail } from '../models/carDetail.model';
 import { environment } from 'src/environments/environment.prod';
-import { Observable, throwError } from 'rxjs';
-import { isNullOrWhiteSpace } from '../shared/helpers';
+import { Observable } from 'rxjs';
+import { isNullOrWhiteSpace, handleError } from '../shared/helpers';
 import { RentingResult } from '../models/renteningResult.model';
 import { Renting } from '../models/renting.model';
 import { catchError } from 'rxjs/operators';
@@ -21,40 +21,42 @@ export class CarsService {
     if (isNullOrWhiteSpace(carId)) {
       return null;
     }
-    return this.http.post<CarDetail>(environment.apiUrl + environment.carUrls.DETAIL, { carId });
+    return this.http.post<CarDetail>(environment.apiUrl + environment.carUrls.DETAIL, { carId })
+      .pipe<CarDetail>(catchError<CarDetail, Observable<never>>(handleError));
   }
 
   public rentCar(renting: Renting) {
     return this.http.post<RentingResult>(environment.apiUrl + environment.carUrls.RENT, renting)
-      .pipe<RentingResult>(catchError<RentingResult, Observable<never>>(this.handleError));
+      .pipe<RentingResult>(catchError<RentingResult, Observable<never>>(handleError));
   }
 
   public cancelRent(carId: string, email: string, password: string) {
     return this.http.post<string>(environment.apiUrl + environment.carUrls.CANCEL, { carId, email, password })
-      .pipe<string>(catchError<string, Observable<never>>(this.handleError));
+      .pipe<string>(catchError<string, Observable<never>>(handleError));
   }
 
   public getRentedCar(email: string): Observable<CarDetail> {
     return this.http.get<CarDetail>(environment.apiUrl + environment.carUrls.RENTED + '/' + email)
-      .pipe<CarDetail>(catchError<CarDetail, Observable<never>>(this.handleError));
+      .pipe<CarDetail>(catchError<CarDetail, Observable<never>>(handleError));
   }
 
   public getPremises(): Observable<Premise[]> {
     return this.http.get<Premise[]>(environment.apiUrl + environment.premiseUrls.GET)
-    .pipe<Premise[]>(catchError<Premise[], Observable<never>>(this.handleError));
+      .pipe<Premise[]>(catchError<Premise[], Observable<never>>(handleError));
   }
 
+  public updateCar(car: CarDetail): Observable<Object> {
+    return this.http.post(environment.apiUrl + environment.adminUrls.UPDATE, car)
+      .pipe(catchError(handleError));
+  }
 
-  private handleError(errorRes: HttpErrorResponse): Observable<never> {
-    let errorMsg = `Status: ${errorRes.statusText}, Code: ${errorRes.status}`;
-    if (errorRes.error && Object.keys(errorRes.error.errors).length !== 0) {
-      errorMsg = `Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`;
-    } else if (errorRes.status === 422) {
-      errorMsg = `Cause: ${errorRes.error.instance}, Code: ${errorRes.status}`;
-    } else if (errorRes.status >= 400 && errorRes.statusText.toUpperCase() === 'OK') {
-      errorMsg = `Cause: An unknown error occurred!, Code: ${errorRes.status}`;
-    }
+  public addCar(car: CarDetail): Observable<Object> {
+    return this.http.post(environment.apiUrl + environment.adminUrls.ADD, car)
+      .pipe(catchError(handleError));
+  }
 
-    return throwError(errorMsg);
+  public deletecar(carId: string): Observable<Object> {
+    return this.http.post(environment.apiUrl + environment.adminUrls.DELTER, { carId })
+      .pipe(catchError(handleError));
   }
 }

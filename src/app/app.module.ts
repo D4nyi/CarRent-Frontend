@@ -20,6 +20,7 @@ import { RegisterComponent } from './register/register.component';
 import { RentedCarComponent } from './rented-car/rented-car.component';
 import { AdminComponent } from './admin/admin.component';
 import { ModifyComponent } from './admin/modify/modify.component';
+import { AddComponent } from './admin/add/add.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ModifyComponent } from './admin/modify/modify.component';
     RegisterComponent,
     RentedCarComponent,
     AdminComponent,
-    ModifyComponent
+    ModifyComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

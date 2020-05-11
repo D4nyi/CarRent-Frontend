@@ -1,6 +1,13 @@
-<div class="row">
+<div *ngIf="loadProblem">
+  <h2 class="card-title" style="text-align:center;font-size:2rem;padding-top:10rem;">
+    Something went wrong loading data from the database!
+  </h2>
+  <h4 class="card-title" style="text-align:center;">Redirecting in {{sec}} seconds!</h4>
+</div>
+<div class="row" *ngIf="!loadProblem">
   <div class="card col-6" style="padding: 0;height: fit-content;">
-    <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top card-img-bottom" alt="">
+    <img src="{{car.imagePath}}" class="card-img-top" style="padding-bottom: 1rem;" alt="">
+    <button (click)="onDelete()" class="btn btn-danger" style="margin-bottom: 1rem;">Delete Car</button>
   </div>
   <div class="col-6">
     <form (submit)="onModify(modifyForm)" #modifyForm="ngForm">

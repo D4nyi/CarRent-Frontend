@@ -19,6 +19,11 @@ export const environment = {
   },
   premiseUrls: {
     GET: '/premise'
+  },
+  adminUrls: {
+    UPDATE: '/admin/update',
+    ADD: '/admin/add',
+    DELTER: '/admin/delete'
   }
 };
 

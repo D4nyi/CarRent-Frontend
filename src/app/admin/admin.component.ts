@@ -23,7 +23,10 @@ export class AdminComponent implements OnInit {
     });
 
     this.carsService.listCars().subscribe(cars => {
-      this.cars = cars;
+      this.cars = cars.map<CarDetail>((car: CarDetail) => {
+        car.imagePath = `../../assets/${car.imagePath}`
+        return car;
+      });
     });
   }
 

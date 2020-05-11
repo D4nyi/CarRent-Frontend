@@ -12,18 +12,21 @@ import { AppComponent } from '../app.component';
 export class CarsComponent implements OnInit {
   public cars: CarDetail[] = null;
   public selected = 'all';
-  public darkMode:boolean;
+  public darkMode: boolean;
   private allCars: CarDetail[];
 
   constructor(private carsService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
-    AppComponent.darkMode.subscribe(enabled =>{
+    AppComponent.darkMode.subscribe(enabled => {
       this.darkMode = enabled;
     });
     this.carsService.listCars().subscribe(cars => {
-      this.allCars = cars;
-      this.cars = cars;
+      this.allCars = cars.map<CarDetail>((car: CarDetail) => {
+        car.imagePath = `../../assets/${car.imagePath}`
+        return car;
+      });
+      this.cars = this.allCars;
     });
   }
 

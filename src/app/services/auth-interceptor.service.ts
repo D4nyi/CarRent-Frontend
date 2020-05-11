@@ -9,7 +9,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     constructor(private authService: AuthService) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.authService.user.pipe(
             take(1),
             exhaustMap(user => {
@@ -18,7 +18,7 @@ export class AuthInterceptorService implements HttpInterceptor {
                 }
                 return next.handle(req.clone({
                     headers: req.headers.append('Authorization', 'Bearer ' + user.token)
-                }))
+                }));
             })
         );
     }

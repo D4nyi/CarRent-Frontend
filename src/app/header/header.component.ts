@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { AppComponent } from '../app.component';
+import { isAdmin } from '../shared/helpers';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import { AppComponent } from '../app.component';
 })
 export class HeaderComponent implements OnInit {
   public isLoggedin: boolean;
+  public isAdmin: boolean;
   public collapsed = true;
   public darkMode = false;
 
@@ -20,6 +22,9 @@ export class HeaderComponent implements OnInit {
     });
     this.auth.user.subscribe(user => {
       this.isLoggedin = !!user;
+      this.isAdmin = this.isLoggedin ?
+        isAdmin(user) :
+        false;
     });
   }
 

@@ -11,6 +11,7 @@ import { RentedCarComponent } from './rented-car/rented-car.component';
 import { AdminComponent } from './admin/admin.component';
 import { ModifyComponent } from './admin/modify/modify.component';
 import { AdminGuard } from './services/admin.guard';
+import { AddComponent } from './admin/add/add.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
-  { path: 'admin/modify', component: ModifyComponent, canActivate: [AdminGuard] }
+  { path: 'admin/modify', component: ModifyComponent, canActivate: [AdminGuard] },
+  { path: 'admin/add', component: AddComponent, canActivate: [AdminGuard] }
   // { path: '**', component: ErrorComponent}
 ];
 

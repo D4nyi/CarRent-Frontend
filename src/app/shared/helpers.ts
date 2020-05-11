@@ -1,3 +1,9 @@
+import * as JwtDecode from 'jwt-decode';
+import { Token } from '../models/token.model';
+import { User } from '../models/user.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+
 /**
  * Checks if the povided value is a string and it has at least 1 non-withespace chars
  * @param str value that should be tested
@@ -41,8 +47,37 @@ export function adultAge(birthDate: string | Date): boolean {
   return age >= 18;
 }
 
+/**
+ * @returns tomorrow as a Date object
+ */
 export function tomorrow(): Date {
   const date = new Date();
   date.setDate(date.getDate() + 1);
   return date;
+}
+
+/**
+ * Tells if the user is in role Admin
+ * @param user 
+ * @returns true if the user is Admin, otherwise false
+ */
+export function isAdmin(user: User): boolean {
+  if(!user) return false;
+  const role: string = JwtDecode<Token>(user.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  return role === 'Admin';
+}
+
+export function handleError(errorRes: HttpErrorResponse): Observable<never> {
+  let errorMsg = `Status: ${errorRes.statusText}, Code: ${errorRes.status}`;
+  if (!errorRes) {
+    errorMsg = 'Unkonw error occured!';
+  }else if (errorRes.error && Object.keys(errorRes.error.errors).length !== 0) {
+    errorMsg = `Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`;
+  } else if (errorRes.status === 422) {
+    errorMsg = `Cause: ${errorRes.error.instance}, Code: ${errorRes.status}`;
+  } else if (errorRes.status >= 400 && errorRes.statusText.toUpperCase() === 'OK') {
+    errorMsg = `Cause: An unknown error occurred!, Code: ${errorRes.status}`;
+  }
+
+  return throwError(errorMsg);
 }

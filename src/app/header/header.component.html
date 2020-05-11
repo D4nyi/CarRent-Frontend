@@ -16,8 +16,11 @@
             <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="!isLoggedin">
                 <a ngbNavLink class="nav-link" routerLink="/register">Registration</a>
             </li>
-            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="isLoggedin">
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="isLoggedin && !isAdmin">
                 <a ngbNavLink class="nav-link" routerLink="/rented">Rented Car</a>
+            </li>
+            <li [ngbNavItem]="3" class="nav-item" routerLinkActive="active" *ngIf="isAdmin">
+                <a ngbNavLink class="nav-link" routerLink="/admin">Admin</a>
             </li>
         </ul>
         <ul class="navbar-nav mr-right">

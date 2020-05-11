@@ -18,6 +18,7 @@ export class DetailComponent implements OnInit {
     model: 'Dummy',
     id: 'Dummy',
     mileage: 0,
+    imagePath: '',
     premiseName: 'None',
     rented: 'Not Rented'
   };

@@ -8,8 +8,9 @@ export interface CarDetail {
     mileage: number;
     premiseName: string;
     rented: boolean | string;
+    imagePath: string;
     colourName?: string;
-    rentingId?: string;
+    premiseId?: string;
 }
 
 export enum Colour {

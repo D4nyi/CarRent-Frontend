@@ -1,17 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CarDetail, Colour } from 'src/app/models/carDetail.model';
 import { NgForm } from '@angular/forms';
 import { CarsService } from 'src/app/services/cars.service';
 import { Premise } from 'src/app/models/premise.model';
 import { Router } from '@angular/router';
 import { isNullOrWhiteSpace } from 'src/app/shared/helpers';
+import { Colour, CarDetail } from 'src/app/models/carDetail.model';
 
 @Component({
-  selector: 'app-modify',
-  templateUrl: './modify.component.html'
+  selector: 'app-add',
+  templateUrl: './add.component.html'
 })
-export class ModifyComponent implements OnInit, OnDestroy {
-  public car: CarDetail;
+export class AddComponent implements OnInit, OnDestroy {
   public premises: Premise[];
   public colors: { name: string, key: number }[];
   public valid = true;
@@ -22,19 +21,16 @@ export class ModifyComponent implements OnInit, OnDestroy {
   constructor(private carService: CarsService, private router: Router) { }
 
   public ngOnInit(): void {
-    this.car = history.state.car;
-    if (this.car) {
-      this.car.imagePath = '../' + this.car.imagePath;
-      this.carService.getPremises()
-        .subscribe(premises => {
-          if (premises) {
-            this.premises = premises;
-          }
-        }, console.log);
-    } else {
-      this.loadProblem = true;
-      this.countDownTimer();
-    }
+    this.carService.getPremises()
+      .subscribe(premises => {
+        if (premises) {
+          this.premises = premises;
+        }
+      }, error => {
+        console.log(error);
+        this.loadProblem = true;
+        this.countDownTimer();
+      });
 
     this.colors = Object.keys(Colour)
       .filter(k => typeof Colour[k] === 'string' && Colour[k] !== 'None')
@@ -46,32 +42,40 @@ export class ModifyComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onModify(form: NgForm): void {
-    const id = isNullOrWhiteSpace(form.value.id);
+  public onAdd(form: NgForm): void {
+    console.log(form.value as CarDetail);
     const brand = isNullOrWhiteSpace(form.value.brand);
     const model = isNullOrWhiteSpace(form.value.model);
-    const colour = form.value.colour < 1;
+    const colour = +form.value.colour < 1;
     const mileage = form.value.mileage < 1;
     const licensePlate = isNullOrWhiteSpace(form.value.licensePlate);
     const engineDescription = isNullOrWhiteSpace(form.value.engineDescription);
-    console.log(form.value);
-    if (id || brand || model || colour || mileage || licensePlate || engineDescription) {
+    const premiseId = isNullOrWhiteSpace(form.value.premiseId);
+    if (brand || model || colour || mileage || licensePlate || engineDescription || premiseId) {
       this.valid = false;
       return;
     }
     this.valid = true;
-    this.carService.updateCar(form.value)
+
+    const car = {
+      brand: form.value.brand,
+      model: form.value.model,
+      colour: +form.value.colour,
+      mileage: form.value.mileage,
+      licensePlate: form.value.licensePlate,
+      engineDescription: form.value.engineDescription,
+      premiseId: form.value.premiseId,
+      id: null,
+      imagePath: null
+    };
+
+    this.carService.addCar(car as CarDetail)
       .subscribe(result => {
         console.log(result);
-        this.router.navigate(['/admin']);
-      }, console.log);
-  }
-
-  public onDelete() {
-    this.carService.deletecar(this.car.id).subscribe(result => {
-      console.log(result);
-      this.router.navigate(['/admin']);
-    });
+        //this.router.navigate(['/admin']);
+      }, error => {
+        console.log(error);
+      });
   }
 
   private countDownTimer(): void {

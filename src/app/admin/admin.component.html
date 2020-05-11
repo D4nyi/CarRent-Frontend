@@ -1,10 +1,13 @@
+<div class="d-flex justify-content-around" style="padding-bottom: 2rem;">
+  <a class="btn btn-info" style="color: #fff;" routerLink="/admin/add">Add Car</a>
+</div>
 <div class="card-columns">
-  <div class="card" [ngClass]="{'bg-dark':darkMode }" *ngFor="let car of cars">
-    <img src="../../assets/golf_mk_viii_m.jpg" class="card-img-top" alt="{{ car.brand + ' ' + car.model }}">
+  <div class="card" [ngClass]="{'bg-dark': darkMode }" *ngFor="let car of cars">
+    <img src="{{car.imagePath}}" class="card-img-top" alt="{{ car.brand + ' ' + car.model }}">
     <div class="card-body">
       <h5 class="card-title">{{ car.brand + ' ' + car.model }}</h5>
       <p class="card-text">{{car.engineDescription}}</p>
-      <a (click)="onModify(car)" class="btn btn-primary">Modify</a>
+      <button (click)="onModify(car)" class="btn btn-primary">Modify</button>
     </div>
   </div>
 </div>
