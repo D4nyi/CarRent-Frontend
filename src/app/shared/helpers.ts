@@ -58,11 +58,10 @@ export function tomorrow(): Date {
 
 /**
  * Tells if the user is in role Admin
- * @param user 
  * @returns true if the user is Admin, otherwise false
  */
 export function isAdmin(user: User): boolean {
-  if(!user) return false;
+  if (!user) return false;
   const role: string = JwtDecode<Token>(user.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
   return role === 'Admin';
 }
@@ -71,7 +70,7 @@ export function handleError(errorRes: HttpErrorResponse): Observable<never> {
   let errorMsg = `Status: ${errorRes.statusText}, Code: ${errorRes.status}`;
   if (!errorRes) {
     errorMsg = 'Unkonw error occured!';
-  }else if (errorRes.error && Object.keys(errorRes.error.errors).length !== 0) {
+  } else if (errorRes.error && Object.keys(errorRes.error.errors).length !== 0) {
     errorMsg = `Cause: ${errorRes.error.errors.title}, Code: ${errorRes.status}`;
   } else if (errorRes.status === 422) {
     errorMsg = `Cause: ${errorRes.error.instance}, Code: ${errorRes.status}`;

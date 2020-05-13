@@ -70,9 +70,8 @@ export class AddComponent implements OnInit, OnDestroy {
     };
 
     this.carService.addCar(car as CarDetail)
-      .subscribe(result => {
-        console.log(result);
-        //this.router.navigate(['/admin']);
+      .subscribe(() => {
+        this.router.navigate(['/admin']);
       }, error => {
         console.log(error);
       });

@@ -45,17 +45,17 @@ export class CarsService {
       .pipe<Premise[]>(catchError<Premise[], Observable<never>>(handleError));
   }
 
-  public updateCar(car: CarDetail): Observable<Object> {
+  public updateCar(car: CarDetail): Observable<object> {
     return this.http.post(environment.apiUrl + environment.adminUrls.UPDATE, car)
       .pipe(catchError(handleError));
   }
 
-  public addCar(car: CarDetail): Observable<Object> {
+  public addCar(car: CarDetail): Observable<object> {
     return this.http.post(environment.apiUrl + environment.adminUrls.ADD, car)
       .pipe(catchError(handleError));
   }
 
-  public deletecar(carId: string): Observable<Object> {
+  public deletecar(carId: string): Observable<object> {
     return this.http.post(environment.apiUrl + environment.adminUrls.DELTER, { carId })
       .pipe(catchError(handleError));
   }
